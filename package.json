@@ -4,6 +4,8 @@
   "description": "A Basic Music Library API built using tools learnt during the Manchester Codes coding bootcamp backend tracks (Express, Docker, MySQL, Sequelize);",
   "main": "index.js",
   "scripts": {
+    "prestart": "node scripts/create-database.js",
+    "start": "nodemon -r dotenv/config index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -15,5 +17,13 @@
   "bugs": {
     "url": "https://github.com/hatenhaten/music-library-api/issues"
   },
-  "homepage": "https://github.com/hatenhaten/music-library-api#readme"
+  "homepage": "https://github.com/hatenhaten/music-library-api#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "sequelize": "^6.5.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
 }
