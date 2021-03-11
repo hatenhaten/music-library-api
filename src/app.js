@@ -1,14 +1,16 @@
 const express = require('express');
-// const { Artist } = require('./models');
 const artistControllers = require('./controllers/artists');
+const artist = require('./models/artist');
 
 const app = express();
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-    res.status(200).json({ message: 'Hello, world!' });
+app.get('/', (req, res) => {
+    res.send("Hello, world!");
 });
+
+app.get('/artists', artistControllers.list);
 
 app.post('/artists', artistControllers.create);
 
