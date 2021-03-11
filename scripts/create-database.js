@@ -19,7 +19,7 @@ const connection = mysql.createConnection({
     port: DB_PORT,
   });
 
-  connection.query(`CREATE DATABASE IF NON EXISTS ${DB_NAME}`, (err) => {
+  connection.query(`CREATE DATABASE IF NOT EXISTS ${DB_NAME}`, (err) => {
       if (err) {
           console.log(`Your environment variables might be wrong. Please double check the .env file`);
           console.log('Environment Variables are:', { DB_PASSWORD, DB_NAME, DB_USER, DB_HOST, DB_PORT });
