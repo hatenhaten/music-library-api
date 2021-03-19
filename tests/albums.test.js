@@ -1,4 +1,5 @@
-/* eslint-disable no-console */const { expect } = require('chai');
+/* eslint-disable no-console */
+const { expect } = require('chai');
 const request = require('supertest');
 const app = require('../src/app');
 const { Artist, Album } = require('../src/models');
@@ -66,4 +67,67 @@ describe('/albums', () => {
         });
     });
   });
+
+  describe('with albums in the database', () => {
+    let albums;
+
+    beforeEach((done) => {
+      Promise.all([
+        Album.create({ name: "Speakerbox", year: 2003, artistId: artist.id}),
+        Album.create({ name: "Slim shady LP", year: 1999, artistId: artist.id}),
+        Album.create({ name: "Time In", year: 1966, artistId: artist.id}),
+      ]).then((documents) => {
+        albums = documents;
+        done();
+      }).catch(error => done(error));
+    });
+
+    describe('GET /albums', () => {
+      it('gets all album records', (done) => {
+        request(app)
+            .get('/albums')
+            .then((res) => {
+              expect(res.status).to.equal(200);
+              expect(res.body.length).to.equal(3);
+              res.body.forEach((album) => {
+                const expected = albums.find((a) => a.id === album.id);
+                expect(album.name).to.equal(expected.name);
+                expect(album.year).to.equal(expected.year);
+                expect(album.artistId).to.equal(expected.artistId);
+              });
+              done();
+            })
+            .catch(error => done(error));
+      });
+    });
+
+    describe('GET /albums/:albumId', () => {
+      it('gets album record by id', (done) => {
+        const album = albums[0];
+        request(app)
+          .get(`/albums/${album.id}`)
+          .then((res) => {
+            expect(res.status).to.equal(200);
+            expect(res.body.name).to.equal(album.name);
+            expect(res.body.year).to.equal(album.year);
+            done();
+          })
+          .catch(error => done(error));
+      });
+
+      it('returns a 404 if the album does not exist', (done) => {
+        request(app)
+          .get('/albums/12345')
+          .then((res) => {
+            expect(res.status).to.equal(404);
+            expect(res.body.error).to.equal('The album could not be found');
+            done();
+          })
+          .catch(error => done(error));
+      });
+    });
+
+
+
+  })
 });

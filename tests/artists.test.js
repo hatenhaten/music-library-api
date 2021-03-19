@@ -47,7 +47,7 @@ describe('/artists', () => {
             ]).then((documents) => {
                 artists = documents;
                 done();
-            });
+            }).catch(error => done(error));
         });
 
         describe('GET /artists', () => {
@@ -120,7 +120,7 @@ describe('/artists', () => {
                       expect(updatedArtist.name).to.equal('Barry White');
                       done();
                     }).catch(error => done(error));
-                  }).catch(error => done(error));
+                  });
               });
             
             
