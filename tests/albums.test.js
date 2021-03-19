@@ -124,7 +124,7 @@ describe('/albums', () => {
           .get('/albums/12345')
           .then((res) => {
             expect(res.status).to.equal(404);
-            expect(res.body.error).to.equal('The album could not be found');
+            expect(res.body.error).to.equal('The album could not be found.');
             done();
           })
           .catch(error => done(error));
@@ -153,7 +153,51 @@ describe('/albums', () => {
             }).catch(error => done(error));
       });
     });
+
+    describe('PATCH /albums/:id', () => {
+      it('updates album name by id', (done) => {
+        const album = albums[0];
+        request(app)
+          .patch(`/albums/${album.id}`)
+          .send({ name: "Speakerboxxx" })
+          .then((res) => {
+            expect(res.status).to.equal(200);
+            Album.findByPk(album.id, { raw: true})
+            .then((updatedAlbum) => {
+              expect(updatedAlbum.name).to.equal("Speakerboxxx");
+              expect(updatedAlbum.year).to.equal(2003);
+              done();
+            }).catch(error => done(error));
+          }).catch(error => done(error));
+      });
+
+      it('updates album year by id', (done) => {
+        const album = albums[0];
+        request(app)
+          .patch(`/albums/${album.id}`)
+          .send({ year: 1999 })
+          .then((res) => {
+            expect(res.status).to.equal(200);
+            Album.findByPk(album.id, { raw: true})
+            .then((updatedAlbum) => {
+              expect(updatedAlbum.year).to.equal(1999);
+              done();
+            }).catch(error => done(error));
+          }).catch(error => done(error));
+      });
+
+      it('returns a 404 if the album does not exist', (done) => {
+        request(app)
+            .patch('/albums/12345')
+            .then((res) => {
+                expect(res.status).to.equal(404);
+                expect(res.body.error).to.equal('The album could not be found.');
+                done();
+            })
+            .catch(error => done(error));
+      });
+    });
   });
 
-  
+
 });

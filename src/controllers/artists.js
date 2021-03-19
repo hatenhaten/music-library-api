@@ -27,7 +27,8 @@ exports.getArtistById = (req, res) => {
 
 exports.updateArtist = (req, res) => {
   const { id } = req.params;
-  Artist.update(req.body, { where: { id: req.params.artistId } }).then(([rowsUpdated]) => {
+  Artist.update(req.body, { where: { id: req.params.artistId } })
+  .then(([rowsUpdated]) => {
     if (!rowsUpdated) {
       res.status(404).json({ error: 'The artist could not be found.' });
     } else {
