@@ -20,7 +20,7 @@ app.delete('/artists/:artistId', artistControllers.deleteArtist);
 
 app.get('/albums', albumControllers.list);
 app.get('/albums/:albumId', albumControllers.getAlbumById);
-// app.get('/artists/:artistId/albums', albumControllers.getAlbumByArtistId);
+app.get('/artists/:artistId/albums', albumControllers.getAlbumsByArtistId);
 app.post('/artists/:artistId/albums', albumControllers.create);
 // app.patch('/albums/:artistId/', albumControllers.updateAlbum);
 // app.delete('/albums/:albumId', albumControllers.deleteAlbum);

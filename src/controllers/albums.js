@@ -28,7 +28,21 @@ exports.getAlbumById = (req, res) => {
         res.status(404).json({ error: "The album could not be found"});
       } else {
         res.status(200).json(album);
-      };
+      }
+    });
+};
+
+exports.getAlbumsByArtistId = (req, res) => {
+  Artist.findByPk(req.params.artistId)
+    .then(artist => {
+      if(!artist) {
+        res.status(404)
+        .json({ error: "The artist could not be found."});
+      } else {
+        Album.findAll({ where: { artistId: req.params.artistId } })
+          .then(albums => res.status(200)
+          .json(albums));
+      }
     });
 };
   

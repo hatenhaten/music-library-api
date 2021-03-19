@@ -29,6 +29,7 @@ describe('/albums', () => {
     }
   });
 
+
   describe('POST /artists/:artistId/albums', () => {
     it('creates a new album for a given artist', (done) => {
       request(app)
@@ -68,6 +69,7 @@ describe('/albums', () => {
     });
   });
 
+
   describe('with albums in the database', () => {
     let albums;
 
@@ -81,6 +83,7 @@ describe('/albums', () => {
         done();
       }).catch(error => done(error));
     });
+
 
     describe('GET /albums', () => {
       it('gets all album records', (done) => {
@@ -100,6 +103,7 @@ describe('/albums', () => {
             .catch(error => done(error));
       });
     });
+
 
     describe('GET /albums/:albumId', () => {
       it('gets album record by id', (done) => {
@@ -128,6 +132,28 @@ describe('/albums', () => {
     });
 
 
+    describe('GET /artists/:artistId/albums', () => {
+      it('gets all albums by artist', (done) => {
+        request(app)
+            .get(`/artists/${artist.id}/albums`)
+            .then((res) => {
+                expect(res.status).to.equal(200);
+                expect(res.body.length).to.equal(3);
+                done();
+            }).catch(error => done(error));
+      });
 
-  })
+      it('returns a 404 if the artist does not exist', (done) => {
+        request(app)
+            .get('/artists/12345/albums')
+            .then((res) => {
+                expect(res.status).to.equal(404);
+                expect(res.body.error).to.equal('The artist could not be found.');
+                done();
+            }).catch(error => done(error));
+      });
+    });
+  });
+
+  
 });
