@@ -1,87 +1,57 @@
-# Music Library API
+# Music Library API Project
 
-A Basic Music Library API built using tools learnt during the Manchester Codes coding bootcamp backend tracks (Express, Docker, MySQL, Sequelize);
+A Manchester Codes Project to build a music library API using an ExpressJS app connected to a MySQL database using Sequelize.
 
-## Getting Started
+## Concepts Covered
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+- Database & DB design
+- SQL & MySQL
+- Using Sequelize to interact with the database
+- Building an application within a Docker container
+- MySQL Workbench for initial database setup
+- Postman to run API requests
+- Mocha / Chai for testing
+- The use of environment variables to shield sensitive information from view
+- Using Nodemon to auto-restart your Node applications
 
-### Prerequisites
+## The database
 
-What things you need to install the software and how to install them
+we used a MySQL table inside a Docker container. The database has the following structure:
 
-```
-Give examples
-```
+*Arist table*
+name-string
+genre-string
 
-### Installing
+*Album table*
+name-string
+year-integer
+artistId-foreign key
 
-A step by step series of examples that tell you how to get a development env running
+*Song table*
+name-string
+artistId-foreign key
+albumId-foreign key
 
-Say what the step will be
+## API endpoints
 
-```
-Give the example
-```
+ACTION | URI | BODY CONTENT
+-------|-----|-------------
+Add ARTIST | `POST /artists` | name [string], genre [string]
+Edit ARTIST | `PATCH /artists/:artistId` | name [string] and/or genre [string]
+Delete ARTIST | `DELETE /artists/:artistId` | n/a
+Get all ARTISTS | `GET /artists` | n/a
+Get a single ARTIST | `GET /artists/:artistId` | n/a
+Add ALBUM | `POST /artists/:artistId/albums` | name [string], year [integer]
+Edit ALBUM | `PATCH /albums/:albumId` | name [string] and/or year [integer]
+Delete ALBUM | `DELETE /albums/:albumId` | n/a
+Get all ALBUMS | `GET /albums` | n/a
+Get a single ALBUM | `GET /albums/:albumId` | n/a
+Get all ALBUMS by an artist | `GET /artists/:artistId/albums` | n/a
+Add SONG | `POST /albums/:albumId/song` | "name" [string]
+Get all SONGS | `GET /songs` | n/a
+Get a single SONG | `GET /songs/:songId` | n/a
+Get all SONGS by an artist | `GET /artists/:artistId/songs` | n/a
 
-And repeat
+## Status
 
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
-
-## Running the tests
-
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
-
-## Deployment
-
-Add additional notes about how to deploy this on a live system
-
-## Built With
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
-
-## Contributing
-
-Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
-
-## Versioning
-
-We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
-
-## Authors
-
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
-
-See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
-## Acknowledgments
-
-* Hat tip to anyone whose code was used
-* Inspiration
-* etc
+Completed Project
