@@ -102,7 +102,8 @@ describe('/artists', () => {
                 .send({ genre: 'Psychedelic Rock' })
                 .then((res) => {
                   expect(res.status).to.equal(200);
-                  Artist.findByPk(artist.id, { raw: true }).then((updatedArtist) => {
+                  Artist.findByPk(artist.id, { raw: true })
+                  .then((updatedArtist) => {
                     expect(updatedArtist.genre).to.equal('Psychedelic Rock');
                     done();
                   }).catch(error => done(error));

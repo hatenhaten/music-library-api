@@ -48,7 +48,8 @@ exports.getAlbumsByArtistId = (req, res) => {
 
 exports.updateAlbum = (req, res) => {
   const { id } = req.params;
-  Album.update(req.body, { where: { id: req.params.albumId } }).then(([rowsUpdated]) => {
+  Album.update(req.body, { where: { id: req.params.albumId } })
+    .then(([rowsUpdated]) => {
     if (!rowsUpdated) {
       res.status(404).json({ error: 'The album could not be found.' });
     } else {
@@ -57,14 +58,14 @@ exports.updateAlbum = (req, res) => {
   });
 };
 
-//   exports.deleteAlbum = (req, res) => {
-//     const { id } = req.params;
-//     Album.destroy({ where: { id: req.params.albumId } })
-//       .then(album => {
-//         if (!album) {
-//           res.status(404).json({ error: "The album could not be found." });
-//         } else {
-//           res.status(204).json(album);
-//         };
-//     });
-//   };
+exports.deleteAlbum = (req, res) => {
+  const { id } = req.params;
+  Album.destroy({ where: { id: req.params.albumId } })
+    .then(album => {
+      if (!album) {
+        res.status(404).json({ error: "The album could not be found." });
+      } else {
+        res.status(204).json(album);
+      };
+  });
+};
